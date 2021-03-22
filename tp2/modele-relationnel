@@ -1,0 +1,159 @@
+Booking (BookingID, ClientNo, DateBooking, Price, PaymentDone)
+PRIMARY KEY (BookingID)
+FOREIGN KEY (ClientNo) REFERENCES Client(ClientID) -- Effectue
+
+-- ClientNo est un attribut qui provient d'une relation ayant une
+-- multiplicité 1..1 entre les entités Booking et Client.  On poste
+-- alors la clef primaire de Client dans Booking.
+
+
+Ticket (TicketID, BookingNo, PassengerNo)
+PRIMARY KEY(TicketID),
+FOREIGN KEY(BookingNo)   REFERENCES Booking(BookingID),     -- Emet
+FOREIGN KEY(PassengerNo) REFERENCES Passenger(PassengerID)  -- Emis pour
+
+-- BookingNo est un attribut qui provient d'une relation ayant une
+-- multiplicité 1..1 entre les entités Ticket et Booking.  On poste
+-- alors la clef primaire de Booking dans Ticket.
+
+-- PassengerNo est un attribut qui provient d'une relation ayant une
+-- multiplicité 1..1 entre les entités Ticket et Passenger.  On poste
+-- alors la clef primaire de Passenger dans Ticket.
+
+
+Passenger (PassengerID, FirstName, LastName, Sexe)
+PRIMARY KEY(PassengerID)
+
+
+Client (ClientID, FirstName, LastName)
+PRIMARY KEY(ClientID)
+
+
+Payment (PaymentID, BookingNo, CreditCardNo, PaymentDate, mode)
+PRIMARY KEY (PaymentID),
+FOREIGN KEY (BookingNo) REFERENCES Booking(BookingID),   -- Confirmee par
+FOREIGN KEY (CreditCardNo) REFERENCES CreditCard(CardNo) -- Fait par
+
+-- BookingNo est un attribut qui provient d'une relation ayant une
+-- multiplicité 1..1 entre les entités Payment et Booking.  On poste
+-- alors la clef primaire de Booking dans Payment.
+
+-- CreditCardNo est un attribut qui provient d'une relation ayant une
+-- multiplicité 0..1 entre les entités Payment et CreditCard.  On
+-- poste alors la clef primaire de CreditCard dans Payment.
+
+
+CreditCard (CardNo, Expiration, OwnerName)
+PRIMARY KEY (CardNo)
+
+
+Luggage(LuggageID)
+PRIMARY KEY(LuggageID)
+
+
+LuggageRegistration(RegistrationID, LuggaNo, RegistrationDate, RegistrationTime)
+PRIMARY KEY(RegistrationID),
+FOREIGN KEY(LuggageNo) REFERENCES Luggage(LuggageID) -- Possede
+
+-- LuggageNo est un attribut qui provient d'une relation ayant une
+-- multiplicité 1..1 entre les entités LuggageRegistration et Luggage.
+-- On poste alors la clef primaire de Luggage dans
+-- LuggageRegistration.
+
+
+FlightLuggage(PassengerNo, FlightNo, LuggageRegistrationNo) -- Weak
+PRIMARY KEY(PassengerNo, FlightNo, LuggageRegistrationNo),
+FOREIGN KEY(PassengerNo) REFERENCES Passenger(PassengerID), -- Appartient À
+FOREIGN KEY(FlightNo) REFERENCES Flight(FlightID),
+FOREIGN KEY(LuggageRegistrationNo) REFERENCES LuggageRegistration(RegistrationID)
+
+-- La table FlightLuggage provident de l'association 0..* entre
+-- Passenger, Flight et LuggageRegistration, on a alors une PK
+-- composite (PassengeRNo, FlightNo, LuggageRegistration)
+
+
+Plane (PlaneID, manufacturer, model, acquire, numberOfSeat)
+PRIMARY KEY(PlaneID)
+
+
+Seat (SeatNo, PlaneNo, SeatClass) -- Composite
+PRIMARY KEY(SeatNo, PlaneNo), -- Un avion est compose de
+FOREIGN KEY(PlaneNo) REFERENCES Plane(PlaneID)
+
+-- La table Seat provient de l'association 1..* entre Plane et Seat.
+-- On a alors une PK composite (SeatNo, PlaneNo)
+
+
+Employee(EmployeeID, HireDate)
+PRIMARY KEY (EmployeeID)
+
+
+Pilot (LicenceNo, NoEmployee, HireDate, LicenceObtentionDate)
+PRIMARY KEY(LicenceNo)
+
+
+
+Flight (FlightID, PlaneNo, DepartureNo, ArrivalNo, CancelationNo,
+        DelayNo, DepatureDate, DepartureTime, ArrivalDate, ArrivalTime)
+PRIMARY KEY (FlightID),
+FOREIGN KEY (PlaneNo)       REFERENCES Plane(PlaneID),          -- Assure par
+FOREIGN KEY (DepartureNo)   REFERENCES Airport(Code),           -- Quitte
+FOREIGN KEY (ArrivalNo)     REFERENCES Airport(Code),           -- Arrive
+FOREIGN KEY (CancelationNo) REFERENCES Cancelation(CancelID),   -- Suivi de
+FOREIGN KEY (DelayNo)       REFERENCES FlightDelay(DelayID)     -- Possede
+
+-- PlaneNo est un attribut qui provient d'une relation ayant une
+-- multiplicité 1..1 entre les entités Flight et Plane.  On poste
+-- alors la clef primaire de Plane dans Flight.
+
+-- DepartureNo est un attribut qui provient d'une relation ayant une
+-- multiplicité 1..1 entre les entités Flight et Airport.  On poste
+-- alors la clef primaire de Airport dans Flight.
+
+-- ArrivalNo est un attribut qui provient d'une relation ayant une
+-- multiplicité 1..1 entre les entités Flight et Airport.  On poste
+-- alors la clef primaire de Airport dans Flight.
+
+-- CancelationNo est un attribut qui provient d'une relation ayant une
+-- multiplicité 0..1 entre les entités Flight et Cancelation.  On
+-- poste alors la clef primaire de Cancelation dans Flight.
+
+-- DelayNo est un attribut qui provient d'une relation ayant une
+-- multiplicité 0..1 entre les entités Flight et FlightDelay.  On
+-- poste alors la clef primaire de FlightDelay dans Flight.
+
+
+Responsability(EmployeeNo, FlightNo, rType) -- Weak
+PRIMARY KEY(EmployeeNo, FlightNo),
+FOREIGN KEY(EmployeeNo) REFERENCES Employee(EmployeeID), -- Fait appel
+FOREIGN KEY(FlightNo)   REFERENCES Flight(FlightID)
+
+-- La table Responsability provient de l'association 1..* entre Flight
+-- et Employee.  On a alors une PK composite (EmployeeNo, FlightNo)
+
+
+Cancelation (CancelID, Reason)
+PRIMARY KEY(CancelID)
+
+
+FlightDelay (DelayID, RealDeparture, RealArrival, Reason)
+PRIMARY KEY(DelayID)
+
+
+Airport (Code, City)
+PRIMARY KEY(Code)
+
+
+Fare (Code, Condition)
+PRIMARY KEY(Code)
+
+
+FlightBooking (BookingNo, FlightNo, FareNo)  -- Weak
+PRIMARY KEY (BookingNo, FlightNo),
+FOREIGN KEY (BookingNo) REFERENCES Booking(BookingID),
+FOREIGN KEY (FlightNo)  REFERENCES Flight(FlightID),
+FOREIGN KEY (FareNo)    REFERENCES Fare(Code)              -- Applique a
+
+-- La table FlightBooking provient de l'association 0..* entre
+-- Reservation, Flight et Fre.  On a alors une PK composite
+-- (BookingNo, FlightNo, FareNo)

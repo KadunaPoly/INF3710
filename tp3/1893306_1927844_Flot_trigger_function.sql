@@ -1,0 +1,23 @@
+SET search_path to tp3;
+
+CREATE FUNCTION nbAvions() RETURNS INTEGER AS $$
+BEGIN
+	RETURN SELECT COUNT(AvionID)) FROM AVION;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION update_controle() RETURNS TRIGGER AS $$
+BEGIN
+CREATE TABLE IF NOT EXISTS Controle(
+       ControleID SERIAL PRIMARY KEY,
+       AvionID    INTEGER REFERENCES Avion(AvionID),
+       DATE       DEFAULT CURRENT
+);
+INSERT INTO Controle(AvionID) VALUES (NEW);
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER Controle_Inspection
+BEFORE INSERT OR UPDATE OF Modele ON Avion
+WHEN (NEW.Modele NOT IN (SELECT Modele FROM Avion))
+EXECUTE PROCEDURE update_controle();

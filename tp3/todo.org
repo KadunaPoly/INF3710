@@ -1,0 +1,75 @@
+* DONE a) [3/3]
+
+  - [X] La variable dateService est obligatoire ...
+  - [X] On doit s'assurer que le type_constructeur indique ...
+  - [X] On doit generer automatiquement une valeur ...
+
+* DONE b) Insérer des données dans toutes les tables.
+
+* TODO c) Écrire les requêtes SQL [7/13]
+
+  - [X] Retourner le nombre d'appareils produits par pays
+
+  - [X] Retourner le nombre d'appareils produits par pays dont le
+    nombre de sièges est supérieur à 200.
+
+  - [X] Préparer une requête afin de réaliser une analyse de l’état de
+    la flotte à partir des données suivantes : le modèle, le nombre de
+    sièges, le nombre d’heures accumulées et la vitesse.
+
+  - [ ] Quels sont les avions encore en service ? Proposer une requête
+    en listant l’avion, son modèle, le nombre de sièges et le nombre
+    d’heures de vol.
+
+  - [X] Retourner le nombre de sièges et le nombre d’heures de vol des
+    flottes.
+
+  - [X] Quels sont le ou les modèles d'appareils dont le nombre de
+    sièges est supérieur à 300? Affichez le modèle et le nom de la
+    compagnie.
+
+  - [X] Quel est le nombre d'appareil (avions) dont le nombre des
+    sièges est supérieur à la moyenne des sièges de tous les
+    appareils, en utilisant une ou des sous-requêtes?
+
+  - [X] Quelle est la différence entre le plus grand et le plus petit
+    diamètre d'un moteur ? Affichez le résultat dans une colonne
+    nommée différence.
+
+  - [ ] Créer une vue Avion_Bombardier_Vue ayant le nom de la
+    compagnie, le modèle, le nombre des sièges et le nombre des
+    moteurs d’avion construit par 'Bombardier Aéro'.
+
+  - [ ] Modifiez la vue en utilisant CHECK Option. Que se passe-t-il ?
+
+  - [ ] Créez la vue Avion_Bombardier_Update_Check qui contient tous
+    les avions de constructeur dont l’id = 1.
+
+  - [ ] Mettez à jour les tuples de la vue en 11) en changeant l’id
+    constructeur à 2. Que se passe-t-il ?
+    
+  - [ ] Modifiez la vue en 11) en rajoutant l’option WITH CHECK
+    OPTION. Ré- exécutez le code de création de la vue et essayez de
+    mettre à jour la vue comme dans 12. Que se passe-t-il ?
+  
+
+* TODO d) Trigger [1/2]
+
+  Créez un fichier Flot_trigger_function.sql qui contient les éléments
+  suivants:
+
+  - [X] Une fonction nbAvions en PL/pgSQL qui retourne le nombre total
+    d’avions
+
+  - [ ] Un trigger contrôle_inspection qui crée une insertion dans une
+    table nommée Controle. Ce trigger se déclenche lorsqu’il y a une
+    mise à jour d’un nouveau modèle d’avion.  On veut conserver les
+    informations de l’avion ainsi que la date de la mise à jour
+
+
+* TODO Livrable [2/4]
+
+  - [X] schema
+  - [X] data
+  - [ ] query
+  - [ ] function

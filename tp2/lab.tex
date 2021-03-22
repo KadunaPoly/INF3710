@@ -1,0 +1,62 @@
+% SPDX-License-Identifier: GPL-2.0-or-later
+
+% Copyright (C) 2020 Olivier Dion <olivier.dion@polymtl.ca>
+
+
+\documentclass[12pt,letterpaper]{report}
+
+\usepackage[letterpaper, top=0.5in]{geometry}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{enumerate}
+\usepackage[obeyspaces]{url}
+\usepackage{algpseudocode}
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[french]{babel}
+\usepackage{pdfpages}
+\usepackage{verbatim}
+\graphicspath{ {.} }
+
+\def\title{INF3710 - Fichiers et Bases de données}
+\def\tpnumber{2}
+
+\renewcommand{\b}[1]{\textbf{#1}}
+\renewcommand{\i}[1]{\textit{#1}}
+\newcommand{\var}[1]{\texttt{#1}}
+\newcommand{\file}[1]{\path{#1}}
+\newcommand{\vhdl}[1]{\mintinline{vhdl}{#1}}
+
+\titleformat{\chapter}{\bf\huge}{\thechapter.}{20pt}{\bf\huge}
+\renewcommand*\contentsname{Table of Contents}
+
+\renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}}
+\renewcommand\cftchapfont{\Large\bfseries}
+\renewcommand\cftchappagefont{\Large\bfseries}
+\renewcommand\cftchapafterpnum{\par\addvspace{6pt}}
+
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+\renewcommand\cftsecfont{\large}
+\renewcommand\cftsecpagefont{\large}
+\renewcommand\cftsecafterpnum{\par\addvspace{6pt}}
+
+\setlength{\parskip}{0.5em}
+
+\begin{document}
+
+
+\input{title-page.tex}
+
+\newpage
+\chapter{Modèle relationnel}
+\verbatiminput{./modele-relationnel}
+
+\end{document}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
